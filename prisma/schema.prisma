@@ -1,0 +1,103 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("APP_DATABASE_URL")
+}
+
+enum ContentType {
+  PROFILE
+  DYNAMIC
+  LINK
+}
+
+model User {
+  id          String        @id @default(uuid())
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  email       String        @unique
+  password    String
+  name        String
+  DynamicPage DynamicPage[]
+  ProfilePage ProfilePage[]
+  Link        Link[]
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  items     Item[]
+}
+
+model Item {
+  id        String      @id @default(uuid())
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  type      ContentType
+
+  dynamic   DynamicPage? @relation(fields: [dynamicId], references: [id])
+  dynamicId String?
+
+  link   Link?   @relation(fields: [linkId], references: [id])
+  linkId String?
+
+  profile   ProfilePage? @relation(fields: [profileId], references: [id])
+  profileId String?
+
+  Category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId String?
+}
+
+model DynamicPage {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String
+  content   String   @db.MediumText
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  Item      Item[]
+}
+
+model Profile {
+  id                String        @id @default(uuid())
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  name              String
+  position          String
+  expertise         String
+  staffHandbookLink String
+  profileUrl        String
+  ProfilePage       ProfilePage[]
+}
+
+model ProfilePage {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String
+  description String   @db.MediumText
+  profile     Profile  @relation(fields: [profileId], references: [id])
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    String
+  profileId   String
+  Item        Item[]
+}
+
+model Link {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String
+  url       String
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  Item      Item[]
+}
