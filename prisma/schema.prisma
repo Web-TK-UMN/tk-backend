@@ -17,7 +17,7 @@ enum ContentType {
 }
 
 model User {
-  id          String        @id @default(uuid())
+  id          String        @id @default(cuid())
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   email       String        @unique
@@ -29,7 +29,9 @@ model User {
 }
 
 model Category {
-  id        String   @id @default(uuid())
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  order     Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name      String
@@ -37,26 +39,28 @@ model Category {
 }
 
 model Item {
-  id        String      @id @default(uuid())
+  id        String      @id @default(cuid())
+  slug      String      @unique
+  order     Int
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
   type      ContentType
 
-  dynamic   DynamicPage? @relation(fields: [dynamicId], references: [id])
+  dynamic   DynamicPage? @relation(fields: [dynamicId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   dynamicId String?
 
-  link   Link?   @relation(fields: [linkId], references: [id])
+  link   Link?   @relation(fields: [linkId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   linkId String?
 
-  profile   ProfilePage? @relation(fields: [profileId], references: [id])
+  profile   ProfilePage? @relation(fields: [profileId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   profileId String?
 
-  Category   Category? @relation(fields: [categoryId], references: [id])
+  Category   Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   categoryId String?
 }
 
 model DynamicPage {
-  id        String   @id @default(uuid())
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   title     String
@@ -67,32 +71,34 @@ model DynamicPage {
 }
 
 model Profile {
-  id                String        @id @default(uuid())
-  createdAt         DateTime      @default(now())
-  updatedAt         DateTime      @updatedAt
+  id                String       @id @default(cuid())
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
   name              String
+  email             String
+  picUrl            String
   position          String
   expertise         String
   staffHandbookLink String
   profileUrl        String
-  ProfilePage       ProfilePage[]
+  ProfilePage       ProfilePage? @relation(fields: [profilePageId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  profilePageId     String?
 }
 
 model ProfilePage {
-  id          String   @id @default(uuid())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id          String    @id @default(cuid())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   title       String
-  description String   @db.MediumText
-  profile     Profile  @relation(fields: [profileId], references: [id])
-  author      User     @relation(fields: [authorId], references: [id])
+  description String    @db.MediumText
+  profile     Profile[]
+  author      User      @relation(fields: [authorId], references: [id])
   authorId    String
-  profileId   String
   Item        Item[]
 }
 
 model Link {
-  id        String   @id @default(uuid())
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   title     String

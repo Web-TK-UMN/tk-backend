@@ -1,0 +1,706 @@
+{
+	"info": {
+		"_postman_id": "c9d337cc-ff11-4c93-aad8-b39e0fb6f5c2",
+		"name": "TK-Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25244576"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"fathanridhwan@gmail.com\",\r\n    \"password\": \"fathan123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/auth/login",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/auth/profile",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"auth",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "upload",
+			"item": [
+				{
+					"name": "upload",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "upload",
+									"type": "file",
+									"src": "/C:/Users/Fathan Ridhwan/Downloads/Pertemuan 11.pptx"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api_url}}/upload/",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"upload",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "category",
+			"item": [
+				{
+					"name": "get all category entry",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/category/",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"category",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get category entry",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/category/:slug",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"category",
+								":slug"
+							],
+							"variable": [
+								{
+									"key": "slug",
+									"value": "apple"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Jambu Air\",\r\n    \"slug\": \"guava\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/category/",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"category",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update category",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Apel\",\r\n    \"slug\": \"apple\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/category/:categorySlug",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"category",
+								":categorySlug"
+							],
+							"variable": [
+								{
+									"key": "categorySlug",
+									"value": "apple"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/category/:categorySlug",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"category",
+								":categorySlug"
+							],
+							"variable": [
+								{
+									"key": "categorySlug",
+									"value": "apple"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reorder category",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"order\": [\"banana\", \"guava\", \"apple\", \"pear\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/category/order",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"category",
+								"order"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "items",
+			"item": [
+				{
+					"name": "content",
+					"item": [
+						{
+							"name": "profile",
+							"item": [
+								{
+									"name": "add profile",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"Dr. Ivan Gunawan CLONE, S. Pd, M.A.\",\r\n    \"email\": \"ivan.gunawan2@gmail.com\",\r\n    \"picUrl\": \"https://google.com\",\r\n    \"position\": \"Officer\",\r\n    \"expertise\": \"Juragan Apel\",\r\n    \"staffHandbookLink\": \"https://google.com\",\r\n    \"profileUrl\": \"https://google.com\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_url}}/item/:slugCategory/:slugItem/profile/entry",
+											"host": [
+												"{{api_url}}"
+											],
+											"path": [
+												"item",
+												":slugCategory",
+												":slugItem",
+												"profile",
+												"entry"
+											],
+											"variable": [
+												{
+													"key": "slugCategory",
+													"value": "apple"
+												},
+												{
+													"key": "slugItem",
+													"value": ""
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "edit profile",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"Dr. Ivan Gunawan CLONE, S. Pd, M.A.\",\r\n    \"email\": \"ivan.gunawan2@gmail.com\",\r\n    \"picUrl\": \"https://google.com\",\r\n    \"position\": \"Officer\",\r\n    \"expertise\": \"Juragan Apel\",\r\n    \"staffHandbookLink\": \"https://google.com\",\r\n    \"profileUrl\": \"https://google.com\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_url}}/item/:slugCategory/:slugItem/profile/entry/:idProfile",
+											"host": [
+												"{{api_url}}"
+											],
+											"path": [
+												"item",
+												":slugCategory",
+												":slugItem",
+												"profile",
+												"entry",
+												":idProfile"
+											],
+											"variable": [
+												{
+													"key": "slugCategory",
+													"value": "apple"
+												},
+												{
+													"key": "slugItem",
+													"value": "testing"
+												},
+												{
+													"key": "idProfile",
+													"value": "clpfglbhj000013l0k0cjc94i"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "delete profile",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{api_url}}/item/:slugCategory/:slugItem/profile/entry/:idProfile",
+											"host": [
+												"{{api_url}}"
+											],
+											"path": [
+												"item",
+												":slugCategory",
+												":slugItem",
+												"profile",
+												"entry",
+												":idProfile"
+											],
+											"variable": [
+												{
+													"key": "slugCategory",
+													"value": "apple"
+												},
+												{
+													"key": "slugItem",
+													"value": "testing"
+												},
+												{
+													"key": "idProfile",
+													"value": "clpfg6k200002iy0qt0givtld"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "upsert dynamic content",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Testinggg\",\r\n    \"content\": \"<p>Hello world</p>\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/item/:slugCategory/:slugItem/dynamic",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"item",
+										":slugCategory",
+										":slugItem",
+										"dynamic"
+									],
+									"variable": [
+										{
+											"key": "slugCategory",
+											"value": "apple"
+										},
+										{
+											"key": "slugItem",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "upsert link content",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Testing Doang Ngab\",\r\n    \"url\": \"https://google.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/item/:slugCategory/:slugContent/link",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"item",
+										":slugCategory",
+										":slugContent",
+										"link"
+									],
+									"variable": [
+										{
+											"key": "slugCategory",
+											"value": "apple"
+										},
+										{
+											"key": "slugContent",
+											"value": "nyemil"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "upsert profile content",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Lecturers\",\r\n    \"description\": \"<p>deskripsi singkat ceunah</p>\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/item/:slugCategory/:slugContent/profile",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"item",
+										":slugCategory",
+										":slugContent",
+										"profile"
+									],
+									"variable": [
+										{
+											"key": "slugCategory",
+											"value": "apple"
+										},
+										{
+											"key": "slugContent",
+											"value": "testing"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "get item",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/item/:slugCategory/:slugContent",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"item",
+								":slugCategory",
+								":slugContent"
+							],
+							"variable": [
+								{
+									"key": "slugCategory",
+									"value": "apple"
+								},
+								{
+									"key": "slugContent",
+									"value": "minum"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create item",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"slug\": \"nyemil\",\r\n    \"type\": \"LINK\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/item/:slugCategory/",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"item",
+								":slugCategory",
+								""
+							],
+							"variable": [
+								{
+									"key": "slugCategory",
+									"value": "apple"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update item",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"slug\": \"nyemil\",\r\n    \"type\": \"LINK\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/item/:slugCategory/:slugItem",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"item",
+								":slugCategory",
+								":slugItem"
+							],
+							"variable": [
+								{
+									"key": "slugCategory",
+									"value": "apple"
+								},
+								{
+									"key": "slugItem",
+									"value": "nyemil"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete item",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/item/:slugCategory/:slugContent",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"item",
+								":slugCategory",
+								":slugContent"
+							],
+							"variable": [
+								{
+									"key": "slugCategory",
+									"value": "apple"
+								},
+								{
+									"key": "slugContent",
+									"value": "nyemil"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reorder item",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"order\": [\"minum\", \"testing\", \"tutorial\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/item/order/:slugCategory/",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"item",
+								"order",
+								":slugCategory",
+								""
+							],
+							"variable": [
+								{
+									"key": "slugCategory",
+									"value": "apple"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNscGRzdzg1MzAwMDAxMW11a3Bqa3RhOHoiLCJpYXQiOjE3MDA5OTE1NDAsImV4cCI6MTcwMTA3Nzk0MH0.We9d4XM0P_RmiQQikzh9FXJ1GIyxprNmtFz2d9OEK88",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "api_url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}

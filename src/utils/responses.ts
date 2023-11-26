@@ -1,4 +1,5 @@
 import { ZodError } from "zod";
+import { Response } from "express";
 
 export enum Responses {
   SUCCESS = 200,
@@ -20,49 +21,68 @@ const responseModel = <T>(code: Responses, message: string, data?: T) => {
   };
 };
 
-export const success = <T>(message: string, data?: T) => {
-  return responseModel<T>(Responses.SUCCESS, message, data);
+export const success = <T>(res: Response, message: string, data?: T) => {
+  return res
+    .status(Responses.SUCCESS)
+    .json(responseModel<T>(Responses.SUCCESS, message, data));
 };
 
-export const created = <T>(message: string, data?: T) => {
-  return responseModel<T>(Responses.CREATED, message, data);
+export const created = <T>(res: Response, message: string, data?: T) => {
+  return res
+    .status(Responses.CREATED)
+    .json(responseModel<T>(Responses.CREATED, message, data));
 };
 
-export const badRequest = (message: string) => {
-  return responseModel(Responses.BAD_REQUEST, message);
+export const badRequest = (res: Response, message: string) => {
+  return res
+    .status(Responses.BAD_REQUEST)
+    .json(responseModel(Responses.BAD_REQUEST, message));
 };
 
-export const unauthorized = (message: string) => {
-  return responseModel(Responses.UNAUTHORIZED, message);
+export const unauthorized = (res: Response, message: string) => {
+  return res
+    .status(Responses.UNAUTHORIZED)
+    .json(responseModel(Responses.UNAUTHORIZED, message));
 };
 
-export const notFound = (message: string) => {
-  return responseModel(Responses.NOT_FOUND, message);
+export const notFound = (res: Response, message: string) => {
+  return res
+    .status(Responses.NOT_FOUND)
+    .json(responseModel(Responses.NOT_FOUND, message));
 };
 
-export const forbidden = (message: string) => {
-  return responseModel(Responses.FORBIDDEN, message);
+export const forbidden = (res: Response, message: string) => {
+  return res
+    .status(Responses.FORBIDDEN)
+    .json(responseModel(Responses.FORBIDDEN, message));
 };
 
-export const conflict = (message: string) => {
-  return responseModel(Responses.CONFLICT, message);
+export const conflict = (res: Response, message: string) => {
+  return res
+    .status(Responses.CONFLICT)
+    .json(responseModel(Responses.CONFLICT, message));
 };
 
-export const validationError = (message: string) => {
-  return responseModel(Responses.VALIDATION_ERROR, message);
+export const validationError = (res: Response, message: string) => {
+  return res
+    .status(Responses.VALIDATION_ERROR)
+    .json(responseModel(Responses.VALIDATION_ERROR, message));
 };
 
-export const internalServerError = () => {
-  return responseModel(
-    Responses.INTERNAL_SERVER_ERROR,
-    "Internal Server Error"
-  );
+export const internalServerError = (res: Response) => {
+  return res
+    .status(Responses.INTERNAL_SERVER_ERROR)
+    .json(
+      responseModel(Responses.INTERNAL_SERVER_ERROR, "Internal Server Error")
+    );
 };
 
 export const parseZodError = <T = any>(error: ZodError<T>) => {
-  const errors: string[] = [];
-  error.issues.forEach((issue) => {
-    errors.push(issue.message);
-  });
-  return errors.join(", ");
+  const flattened = error.flatten();
+
+  const fieldErrors = Object.keys(flattened.fieldErrors)
+    .map((key) => `${key} ${flattened.fieldErrors[key as keyof true]}`)
+    .join(", ");
+
+  return fieldErrors;
 };
