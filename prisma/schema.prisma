@@ -44,6 +44,7 @@ model Item {
   order     Int
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
+  title     String
   type      ContentType
 
   dynamic   DynamicPage? @relation(fields: [dynamicId], references: [id], onDelete: SetNull, onUpdate: Cascade)
@@ -63,7 +64,6 @@ model DynamicPage {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  title     String
   content   String   @db.MediumText
   author    User     @relation(fields: [authorId], references: [id])
   authorId  String
@@ -89,7 +89,6 @@ model ProfilePage {
   id          String    @id @default(cuid())
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  title       String
   description String    @db.MediumText
   profile     Profile[]
   author      User      @relation(fields: [authorId], references: [id])
@@ -101,7 +100,6 @@ model Link {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  title     String
   url       String
   author    User     @relation(fields: [authorId], references: [id])
   authorId  String

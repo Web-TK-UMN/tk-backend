@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
 import db from "@/services/db";
-import { type UserLoginDto, userLoginDto } from "@/models/user.model";
+import {
+  type UserLoginDto,
+  userLoginDto,
+  ReCAPTCHAResponse,
+} from "@/models/user.model";
 import {
   internalServerError,
   notFound,
@@ -11,6 +15,8 @@ import {
 } from "@/utils/responses";
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
+import axios from "axios";
+import ENV from "@/utils/env";
 
 export const loginHandler = async (
   req: Request<{}, {}, UserLoginDto>,
@@ -22,7 +28,16 @@ export const loginHandler = async (
       return validationError(res, parseZodError(validate.error));
     }
 
-    const { email, password } = validate.data;
+    const { email, password, reCAPTCHAToken } = validate.data;
+
+    const recaptcha = await axios.post<ReCAPTCHAResponse>(
+      `https://www.google.com/recaptcha/api/siteverify?secret=${ENV.RECAPTCHA_SECRET_KEY}&response=${reCAPTCHAToken}`
+    );
+
+    if (!recaptcha.data.success) {
+      return unauthorized(res, "reCAPTCHA verification failed");
+    }
+
     const user = await db.user.findUnique({
       where: { email },
     });

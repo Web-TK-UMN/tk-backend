@@ -38,7 +38,7 @@ export const createOrUpdateDynamicPage = async (
     return validationError(res, parseZodError(validate.error));
   }
 
-  const { title, content } = validate.data;
+  const { content } = validate.data;
 
   const category = await db.category.findUnique({
     where: { slug: slugCategory },
@@ -68,7 +68,6 @@ export const createOrUpdateDynamicPage = async (
     await db.dynamicPage.update({
       where: { id: currContent.dynamicId },
       data: {
-        title,
         content,
       },
     });
@@ -77,7 +76,6 @@ export const createOrUpdateDynamicPage = async (
   }
   await db.dynamicPage.create({
     data: {
-      title,
       content,
       author: {
         connect: {
@@ -116,7 +114,7 @@ export const createOrUpdateProfilePage = async (
     return validationError(res, parseZodError(validate.error));
   }
 
-  const { title, description } = validate.data;
+  const { description } = validate.data;
 
   const category = await db.category.findUnique({
     where: { slug: slugCategory },
@@ -146,7 +144,6 @@ export const createOrUpdateProfilePage = async (
     await db.profilePage.update({
       where: { id: currContent.profileId },
       data: {
-        title,
         description,
       },
     });
@@ -156,7 +153,6 @@ export const createOrUpdateProfilePage = async (
 
   await db.profilePage.create({
     data: {
-      title,
       description,
       author: {
         connect: {
@@ -383,7 +379,7 @@ export const createOrUpdateLink = async (
     return validationError(res, parseZodError(validate.error));
   }
 
-  const { title, url } = validate.data;
+  const { url } = validate.data;
 
   const category = await db.category.findUnique({
     where: { slug: slugCategory },
@@ -413,7 +409,6 @@ export const createOrUpdateLink = async (
     await db.link.update({
       where: { id: currContent.linkId },
       data: {
-        title,
         url,
       },
     });
@@ -423,7 +418,6 @@ export const createOrUpdateLink = async (
 
   await db.link.create({
     data: {
-      title,
       url,
       author: {
         connect: {

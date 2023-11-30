@@ -28,24 +28,22 @@ export const getAllCategories = async (req: Request, res: Response) => {
           select: {
             id: true,
             slug: true,
+            title: true,
             order: true,
             type: true,
             dynamic: {
               select: {
                 id: true,
-                title: true,
               },
             },
             profile: {
               select: {
                 id: true,
-                title: true,
               },
             },
             link: {
               select: {
                 id: true,
-                title: true,
                 url: true,
               },
             },
@@ -68,6 +66,7 @@ export const getAllCategories = async (req: Request, res: Response) => {
       ...category,
       items: category.items.map((item) => ({
         id: item.id,
+        title: item.title,
         slug: item.slug,
         order: item.order,
         type: item.type,
@@ -101,24 +100,22 @@ export const getCategory = async (req: Request, res: Response) => {
           select: {
             id: true,
             slug: true,
+            title: true,
             order: true,
             type: true,
             dynamic: {
               select: {
                 id: true,
-                title: true,
               },
             },
             profile: {
               select: {
                 id: true,
-                title: true,
               },
             },
             link: {
               select: {
                 id: true,
-                title: true,
               },
             },
             updatedAt: true,
@@ -138,6 +135,7 @@ export const getCategory = async (req: Request, res: Response) => {
       ...category,
       items: category.items.map((item) => ({
         id: item.id,
+        title: item.title,
         type: item.type,
         slug: item.slug,
         order: item.order,

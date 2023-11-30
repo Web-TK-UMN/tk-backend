@@ -1,6 +1,7 @@
 import Express, { type Request, type Response } from "express";
 import ENV from "@/utils/env";
 import { notFound, success } from "./utils/responses";
+import cors from "cors";
 
 // routes
 import authRouter from "@/routes/auth.route";
@@ -11,6 +12,7 @@ import itemRouter from "@/routes/item.route";
 const app = Express();
 
 app.use(Express.json());
+app.use(cors());
 app.use("/public", Express.static("public/")); // serve static files
 
 app.get("/", async (req: Request, res: Response) => {

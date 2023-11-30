@@ -5,6 +5,7 @@ import { linkModel } from "@/models/items/link.model";
 
 export const itemModel = z.object({
   id: z.string().cuid(),
+  title: z.string().max(255),
   slug: z.string().max(255),
   order: z.number(),
   type: z.enum(["PROFILE", "DYNAMIC", "LINK"]),
@@ -16,17 +17,19 @@ export const itemModel = z.object({
 });
 
 export const createItemDto = itemModel.pick({
+  title: true,
   slug: true,
   type: true,
 });
 
 export const updateItemDto = itemModel.partial().pick({
+  title: true,
   slug: true,
   // order: true,
-  type: true,
-  dynamic: true,
-  profile: true,
-  link: true,
+  // type: true,
+  // dynamic: true,
+  // profile: true,
+  // link: true,
 });
 
 export const reorderDto = z.object({

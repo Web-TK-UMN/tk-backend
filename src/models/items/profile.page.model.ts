@@ -29,7 +29,6 @@ export type ProfileDto = z.infer<typeof profileDto>;
 
 export const profilePageModel = z.object({
   id: z.string().cuid(),
-  title: z.string().max(255),
   description: z.string(),
   profile: z.array(profileModel),
   author: userModel.pick({
@@ -40,7 +39,6 @@ export const profilePageModel = z.object({
 });
 
 export const profilePageDto = profilePageModel.pick({
-  title: true,
   description: true,
 });
 

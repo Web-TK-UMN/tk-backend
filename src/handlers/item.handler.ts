@@ -45,72 +45,202 @@ export const getContentBySlug = async (
     const currContent = category.items[0];
 
     if (currContent.type === "DYNAMIC") {
-      if (!currContent.dynamicId) {
-        return notFound(res, "Konten Dynamic belum diisi");
-      }
+      // if (!currContent.dynamicId) {
+      //   return notFound(res, "Konten Dynamic belum diisi");
+      // }
 
-      const dynamic = await db.dynamicPage.findUnique({
-        where: { id: currContent.dynamicId },
-        include: {
-          author: {
+      // const dynamic = await db.dynamicPage.findUnique({
+      //   where: { id: currContent.dynamicId },
+      //   include: {
+      //     Item: {
+      //       select: {
+      //         slug: true,
+      //         title: true,
+      //       },
+      //     },
+      //     author: {
+      //       select: {
+      //         name: true,
+      //       },
+      //     },
+      //   },
+      // });
+
+      // if (!dynamic) {
+      //   return notFound(res, "Konten tidak ditemukan");
+      // }
+
+      // return success(res, "Berhasil mendapatkan konten", dynamic);
+
+      const item = await db.item.findUnique({
+        where: { id: currContent.id },
+        select: {
+          id: true,
+          title: true,
+          slug: true,
+          type: true,
+          dynamic: {
             select: {
-              name: true,
+              id: true,
+              content: true,
+              createdAt: true,
+              updatedAt: true,
+              author: {
+                select: {
+                  name: true,
+                },
+              },
             },
           },
+          createdAt: true,
+          updatedAt: true,
         },
       });
 
-      if (!dynamic) {
+      if (!item) {
         return notFound(res, "Konten tidak ditemukan");
       }
 
-      return success(res, "Berhasil mendapatkan konten", dynamic);
+      const resp = {
+        ...item,
+        dynamic: undefined,
+        content: item.dynamic,
+      };
+
+      return success(res, "Berhasil mendapatkan konten", resp);
     }
 
     if (currContent.type === "PROFILE") {
-      if (!currContent.profileId) {
-        return notFound(res, "Konten Profile belum diisi");
-      }
+      // if (!currContent.profileId) {
+      //   return notFound(res, "Konten Profile belum diisi");
+      // }
 
-      const profile = await db.profilePage.findUnique({
-        where: { id: currContent.profileId },
-        include: {
-          author: {
+      // const profile = await db.profilePage.findUnique({
+      //   where: { id: currContent.profileId },
+      //   include: {
+      //     Item: {
+      //       select: {
+      //         slug: true,
+      //         title: true,
+      //       },
+      //     },
+      //     author: {
+      //       select: {
+      //         name: true,
+      //       },
+      //     },
+      //     profile: true,
+      //   },
+      // });
+
+      // if (!profile) {
+      //   return notFound(res, "Konten tidak ditemukan");
+      // }
+
+      // return success(res, "Berhasil mendapatkan konten", profile);
+
+      const item = await db.item.findUnique({
+        where: { id: currContent.id },
+        select: {
+          id: true,
+          title: true,
+          slug: true,
+          type: true,
+          profile: {
             select: {
-              name: true,
+              id: true,
+              description: true,
+              profile: true,
+              createdAt: true,
+              updatedAt: true,
+              author: {
+                select: {
+                  name: true,
+                },
+              },
             },
           },
-          profile: true,
+          createdAt: true,
+          updatedAt: true,
         },
       });
 
-      if (!profile) {
+      if (!item) {
         return notFound(res, "Konten tidak ditemukan");
       }
 
-      return success(res, "Berhasil mendapatkan konten", profile);
+      const resp = {
+        ...item,
+        profile: undefined,
+        content: item.profile,
+      };
+
+      return success(res, "Berhasil mendapatkan konten", resp);
     }
 
-    if (!currContent.linkId) {
-      return notFound(res, "Konten Link belum diisi");
-    }
+    // if (!currContent.linkId) {
+    //   return notFound(res, "Konten Link belum diisi");
+    // }
 
-    const link = await db.link.findUnique({
-      where: { id: currContent.linkId! },
-      include: {
-        author: {
+    // const link = await db.link.findUnique({
+    //   where: { id: currContent.linkId! },
+    //   include: {
+    //     Item: {
+    //       select: {
+    //         slug: true,
+    //         title: true,
+    //       },
+    //     },
+    //     author: {
+    //       select: {
+    //         name: true,
+    //       },
+    //     },
+    //   },
+    // });
+
+    // if (!link) {
+    //   return notFound(res, "Konten tidak ditemukan");
+    // }
+
+    // return success(res, "Berhasil mendapatkan konten", link);
+
+    const item = await db.item.findUnique({
+      where: { id: currContent.id },
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+        type: true,
+        link: {
           select: {
-            name: true,
+            id: true,
+            url: true,
+            createdAt: true,
+            updatedAt: true,
+            author: {
+              select: {
+                name: true,
+              },
+            },
           },
         },
+        createdAt: true,
+        updatedAt: true,
       },
     });
 
-    if (!link) {
+    if (!item) {
       return notFound(res, "Konten tidak ditemukan");
     }
 
-    return success(res, "Berhasil mendapatkan konten", link);
+    const resp = {
+      ...item,
+      link: undefined,
+      content: item.link,
+    };
+
+    return success(res, "Berhasil mendapatkan konten", resp);
   } catch (err) {
     console.error(err);
     return internalServerError(res);
@@ -135,7 +265,7 @@ export const createItem = async (
       return validationError(res, parseZodError(validate.error));
     }
 
-    const { slug, type } = validate.data;
+    const { slug, type, title } = validate.data;
 
     const category = await db.category.findUnique({
       where: { slug: slugCategory },
@@ -167,6 +297,7 @@ export const createItem = async (
 
     const item = await db.item.create({
       data: {
+        title,
         slug,
         type,
         order,
@@ -204,7 +335,7 @@ export const updateItem = async (
       return validationError(res, parseZodError(validate.error));
     }
 
-    const { slug, type } = validate.data;
+    const { slug, type, title } = validate.data;
 
     const category = await db.category.findUnique({
       where: { slug: slugCategory },
@@ -252,6 +383,7 @@ export const updateItem = async (
     const item = await db.item.update({
       where: { id: currContent.id },
       data: {
+        title,
         slug,
         type,
       },

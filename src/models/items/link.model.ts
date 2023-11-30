@@ -4,7 +4,6 @@ import { userModel } from "../user.model";
 export const linkModel = z.object({
   id: z.string().cuid(),
   name: z.string().max(255),
-  title: z.string().max(255),
   url: z.string().url(),
   author: userModel.pick({
     name: true,
@@ -14,7 +13,6 @@ export const linkModel = z.object({
 });
 
 export const linkDto = linkModel.pick({
-  title: true,
   url: true,
 });
 
