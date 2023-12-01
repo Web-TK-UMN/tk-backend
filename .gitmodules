@@ -1,4 +1,0 @@
-[submodule "static"]
-	path = static
-	url = https://github.com/Web-TK-UMN/tk-frontend.git
-	branch = static
