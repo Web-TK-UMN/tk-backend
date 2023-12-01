@@ -10,6 +10,7 @@
     "dev": "nodemon src/index.ts",
     "lint": "eslint . --ext .ts",
     "prisma:migrate": "prisma migrate dev",
+    "prisma:push": "prisma db push --preview-feature",
     "add:user": "ts-node utils/addUser.ts"
   },
   "keywords": [],
