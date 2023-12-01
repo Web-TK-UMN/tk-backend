@@ -1,7 +1,8 @@
 import Express, { type Request, type Response } from "express";
 import ENV from "@/utils/env";
 import { notFound, success } from "./utils/responses";
-import cors from "cors";
+// import cors from "cors";
+import ViteExpress from "vite-express";
 
 // routes
 import authRouter from "@/routes/auth.route";
@@ -12,23 +13,50 @@ import itemRouter from "@/routes/item.route";
 const app = Express();
 
 app.use(Express.json());
-app.use(cors());
-app.use("/public", Express.static("public/")); // serve static files
+// app.use(cors());
+app.use("/api/public", Express.static("public/")); // serve static files
 
-app.get("/", async (req: Request, res: Response) => {
+app.get("/api/", async (req: Request, res: Response) => {
   success(res, "Hello World!");
 });
 
 // routes
-app.use("/auth", authRouter);
-app.use("/upload", uploadRouter);
-app.use("/category", categoryRouter);
-app.use("/item", itemRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/upload", uploadRouter);
+app.use("/api/category", categoryRouter);
+app.use("/api/item", itemRouter);
 
-app.get("*", (req, res) => {
-  return notFound(res, "Page not found");
+// app.get("*", (req, res) => {
+//   return notFound(res, "Page not found");
+// });
+
+// // vite app
+// app.use(Express.static("viteDist/"));
+
+// app.get("*", (req, res) => {
+//   const indexFile = path.resolve("viteDist/index.html");
+//   fs.readFile(indexFile, "utf-8", (err, data) => {
+//     if (err) {
+//       return notFound(res, "Page not found");
+//     }
+
+//     return res.send(data);
+//   });
+// });
+
+// app.listen(ENV.APP_PORT, () => {
+//   console.log(`⚡ Server running on port ${ENV.APP_PORT}`);
+// });
+
+ViteExpress.config({
+  mode: "production",
+  inlineViteConfig: {
+    build: {
+      outDir: "static/",
+    },
+  },
 });
 
-app.listen(ENV.APP_PORT, () => {
+ViteExpress.listen(app, ENV.APP_PORT, () => {
   console.log(`⚡ Server running on port ${ENV.APP_PORT}`);
 });
