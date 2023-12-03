@@ -94,6 +94,13 @@ export const getContentBySlug = async (
           },
           createdAt: true,
           updatedAt: true,
+          Category: {
+            select: {
+              id: true,
+              slug: true,
+              name: true,
+            },
+          },
         },
       });
 
@@ -162,6 +169,13 @@ export const getContentBySlug = async (
           },
           createdAt: true,
           updatedAt: true,
+          Category: {
+            select: {
+              id: true,
+              slug: true,
+              name: true,
+            },
+          },
         },
       });
 
@@ -227,6 +241,13 @@ export const getContentBySlug = async (
         },
         createdAt: true,
         updatedAt: true,
+        Category: {
+          select: {
+            id: true,
+            slug: true,
+            name: true,
+          },
+        },
       },
     });
 
