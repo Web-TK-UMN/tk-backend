@@ -51,7 +51,7 @@ export const loginHandler = async (
     }
 
     const token = sign({ id: user.id }, process.env.APP_JWT_SECRET!, {
-      expiresIn: "1d",
+      expiresIn: "7d",
     });
 
     return success(res, "Login berhasil!", {
