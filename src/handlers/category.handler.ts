@@ -116,6 +116,7 @@ export const getCategory = async (req: Request, res: Response) => {
             link: {
               select: {
                 id: true,
+                url: true,
               },
             },
             updatedAt: true,
