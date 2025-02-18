@@ -136,3 +136,5 @@ public/*
 # ignore static
 static/*
 !static/.gitkeep
+
+bun.lockb
