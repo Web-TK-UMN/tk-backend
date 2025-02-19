@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { userModel } from "../user.model";
+import { userModel } from "@/models/user.model";
 
 export const profileModel = z.object({
   id: z.string().cuid(),

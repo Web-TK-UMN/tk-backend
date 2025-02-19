@@ -1,6 +1,6 @@
 import Express, { type Request, type Response } from "express";
 import ENV from "@/utils/env";
-import { notFound, success } from "./utils/responses";
+import { success } from "@/utils/responses";
 // import cors from "cors";
 import ViteExpress from "vite-express";
 
@@ -9,7 +9,9 @@ import authRouter from "@/routes/auth.route";
 import uploadRouter from "@/routes/upload.route";
 import categoryRouter from "@/routes/category.route";
 import itemRouter from "@/routes/item.route";
-import { sitemapHandler } from "./handlers/sitemap.handler";
+
+// sitemap handler
+import { sitemapHandler } from "@/handlers/sitemap.handler";
 
 const app = Express();
 
