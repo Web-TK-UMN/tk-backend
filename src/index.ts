@@ -9,6 +9,7 @@ import authRouter from "@/routes/auth.route";
 import uploadRouter from "@/routes/upload.route";
 import categoryRouter from "@/routes/category.route";
 import itemRouter from "@/routes/item.route";
+import { sitemapHandler } from "./handlers/sitemap.handler";
 
 const app = Express();
 
@@ -25,6 +26,9 @@ app.use("/api/auth", authRouter);
 app.use("/api/upload", uploadRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/item", itemRouter);
+
+// inject sitemap xml generated from db
+app.get("/sitemap.xml", sitemapHandler);
 
 // app.get("*", (req, res) => {
 //   return notFound(res, "Page not found");

@@ -6,6 +6,7 @@
       "dependencies": {
         "@paralleldrive/cuid2": "^2.2.2",
         "@prisma/client": "5.6.0",
+        "@shun-shobon/littlexml": "^0.6.2",
         "axios": "^1.6.2",
         "bcrypt": "^5.1.1",
         "cors": "^2.8.5",
@@ -78,6 +79,8 @@
     "@prisma/fetch-engine": ["@prisma/fetch-engine@5.22.0", "", { "dependencies": { "@prisma/debug": "5.22.0", "@prisma/engines-version": "5.22.0-44.605197351a3c8bdd595af2d2a9bc3025bca48ea2", "@prisma/get-platform": "5.22.0" } }, "sha512-bkrD/Mc2fSvkQBV5EpoFcZ87AvOgDxbG99488a5cexp5Ccny+UM6MAe/UFkUC0wLYD9+9befNOqGiIJhhq+HbA=="],
 
     "@prisma/get-platform": ["@prisma/get-platform@5.22.0", "", { "dependencies": { "@prisma/debug": "5.22.0" } }, "sha512-pHhpQdr1UPFpt+zFfnPazhulaZYCUqeIcPpJViYoq9R+D/yw4fjE+CtnsnKzPYm0ddUbeXUzjGVGIRVgPDCk4Q=="],
+
+    "@shun-shobon/littlexml": ["@shun-shobon/littlexml@0.6.2", "", {}, "sha512-piwm+jbUM+mEo+b27EMdn09V3wAMR0eZzKuNt+cYFEOe3PEhjII2nNH8KL7tEJI3/KaNnoyeQg705/Kcvnbp0g=="],
 
     "@tsconfig/node10": ["@tsconfig/node10@1.0.11", "", {}, "sha512-DcRjDCujK/kCk/cUe8Xz8ZSpm8mS3mNNpta+jGCA6USEDfktlNvm1+IuZ9eTcDbNk41BHwpHHeW+N1lKCz4zOw=="],
 
